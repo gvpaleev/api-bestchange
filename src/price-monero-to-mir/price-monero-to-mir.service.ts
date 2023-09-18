@@ -6,8 +6,21 @@ import {Options} from 'selenium-webdriver/chrome.js';
 
 @Injectable()
 export class PriceMoneroToMirService {
-
+    price: { amount: number; time: number; };
+    constructor(){
+        this.price={
+            amount:10,
+            time:+new Date
+        }
+    }
     async getPrice(){
+        console.log(this.price.time);
+        console.log(+new Date);
+
+        if((+new Date) - this.price.time < 30000){
+            return this.price.amount
+        }
+        
         let driver = await new Builder()
         .forBrowser('chrome')
         .setChromeOptions((new Options).addArguments('--headless=new'))
@@ -19,6 +32,9 @@ export class PriceMoneroToMirService {
 
         await driver.quit()
 
+        this.price.amount=priceXmr.replace(' ','');
+        this.price.time= +new Date;
+        
         return priceXmr.replace(' ','');
     }
 }
