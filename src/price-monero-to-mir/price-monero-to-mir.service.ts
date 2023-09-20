@@ -34,7 +34,7 @@ export class PriceMoneroToMirService {
 
         this.price.amount=priceXmr.replace(' ','');
         this.price.time= +new Date;
-        
+        console.log(priceXmr.replace(' ',''));
         return priceXmr.replace(' ','');
     }
 }
